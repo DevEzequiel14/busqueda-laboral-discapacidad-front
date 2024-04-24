@@ -1,0 +1,201 @@
+<form [formGroup]="form">
+  <div class="mx-auto w-full max-w-7xl p-4 px-8 flex flex-wrap">
+    <div class="w-full mb-4 flex items-center justify-between"
+      [ngClass]="{'text-lg': !increaseFontSize, 'text-3xl': increaseFontSize}">
+      <h2 class="font-black text-3xl">Formulario</h2>
+      <div class="flex space-x-4">
+        <button class="btn-margin" color="primary" mat-mini-fab (click)="increaseLetterSize()" matTooltip="Visual">
+          <mat-icon>
+            <span class="material-icons-outlined"> visibility </span>
+          </mat-icon>
+        </button>
+      </div>
+    </div>
+    <!-- Informacion personal  -->
+    <div class="w-full my-4" [ngClass]="{'text-2xl': !increaseFontSize, 'text-3xl': increaseFontSize}">
+      <div class="flex space-x-4 items-center mb-4">
+        <span class="text-slate-800">¿Cómo te llamas?</span>
+      </div>
+    </div>
+    <div class="flex-1 flex-wrap space-y-4 md:flex md:space-y-0 md:space-x-16">
+      <div [ngClass]="{'text-lg': !increaseFontSize, 'text-3xl': increaseFontSize}">
+        <mat-form-field appearance="outline" class="w-full md:w-80">
+          <mat-label>Ingrese su nombre</mat-label>
+          <input matInput formControlName="firstname" type="text" placeholder="Ezequiel"
+            (input)="onInputKeyPress($event, 'firstname')" />
+          <mat-error *ngIf="form.get('firstname')?.hasError('required')">El nombre es obligatorio</mat-error>
+          <mat-error *ngIf="form.get('firstname')?.hasError('invalidFormat')">Solo se permiten letras</mat-error>
+        </mat-form-field>
+      </div>
+      <div [ngClass]="{'text-lg': !increaseFontSize, 'text-3xl': increaseFontSize}" class="mb-16">
+        <mat-form-field appearance="outline" class="w-full md:w-80">
+          <mat-label>Ingrese su apellido</mat-label>
+          <input matInput formControlName="lastname" type="text" placeholder="Chorolque"
+            (input)="onInputKeyPress($event, 'lastname')" />
+          <mat-error *ngIf="form.get('lastname')?.hasError('required')">El apellido es obligatorio</mat-error>
+          <mat-error *ngIf="form.get('lastname')?.hasError('invalidFormat')">Solo se permiten letras</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <!--  -->
+    <div class="border-b w-full h-2"></div>
+    <!-- Experciencia laboral -->
+    <div class="w-full my-4" [ngClass]="{'text-2xl': !increaseFontSize, 'text-3xl': increaseFontSize}">
+      <div class="flex space-x-4 items-center mb-4">
+        <span class="text-slate-800">¿De qué trabajaste?</span>
+      </div>
+      <div class="flex space-x-4 items-center mt-4 justify-center mb-6">
+        <ul class="list-disc pl-8 border-solid border-2 p-5 rounded-lg" *ngIf="experienceList.length > 0">
+          <li *ngFor="let element of experienceList">
+            <div class="flex items-center">
+              <strong>{{ element }}</strong>
+              <button class="ml-3 text-red-500 pt-2" (click)="removeExperience(element)" matTooltipPosition="right"
+                matTooltip="Borrar">
+                <mat-icon>
+                  <span class="material-icons-outlined"> delete </span>
+                </mat-icon>
+              </button>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="flex justify-center" [ngClass]="{'text-lg': !increaseFontSize, 'text-3xl': increaseFontSize}">
+        <button class="bg-sky-500 text-white p-3 rounded-lg" (click)="openDialog('experience')">Agregar
+          experiencia</button>
+      </div>
+    </div>
+    <!--  -->
+    <div class="border-b w-full h-2"></div>
+    <!-- Habilidades -->
+    <div class="w-full my-4" [ngClass]="{'text-2xl': !increaseFontSize,'text-3xl': increaseFontSize}">
+      <div class="flex space-x-4 items-center mb-4">
+        <span class="text-slate-800">¿En qué cosas eres bueno?</span>
+      </div>
+      <mat-error class="text-sm" *ngIf="skillsList.length <= 0">* Debe tener al menos una habilidad</mat-error>
+      <div class="flex space-x-4 items-center mt-4 justify-center mb-6">
+        <ul class="list-disc pl-8 border-solid border-2 p-5 rounded-lg" *ngIf="skillsList.length > 0">
+          <li *ngFor="let element of skillsList">
+            <div class="flex items-center">
+              <strong>{{ element }}</strong>
+              <button class="ml-3 text-red-500 pt-2" (click)="removeSkill(element)" matTooltipPosition="right"
+                matTooltip="Borrar">
+                <mat-icon>
+                  <span class="material-icons-outlined"> delete </span>
+                </mat-icon>
+              </button>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="flex justify-center" [ngClass]="{'text-lg': !increaseFontSize, 'text-3xl': increaseFontSize}">
+        <button class="bg-sky-500 text-white p-3 rounded-lg" (click)="openDialog('skill')">Agregar
+          habilidad</button>
+      </div>
+    </div>
+    <!--  -->
+    <div class="border-b w-full h-2"></div>
+    <!-- Educacion -->
+    <div class="w-full my-4" [ngClass]="{'text-2xl': !increaseFontSize, 'text-3xl': increaseFontSize}">
+      <div class="flex space-x-4 items-center mb-4">
+        <span class="text-slate-800">¿Dónde has estudiado?</span>
+      </div>
+      <div class="flex space-x-4 items-center mt-4 justify-center flex-col sm:flex-row mb-6">
+        <ul class="list-disc pl-8 border-solid border-2 p-5 rounded-lg" *ngIf="educationList.length > 0">
+          <li *ngFor="let element of educationList">
+            <div class="flex sm:flex-row items-center justify-center">
+              <div class="flex flex-col md:flex-row">
+                <div class="flex items-center mb-2">
+                  <span class="mr-2">Titulo:</span>
+                  <strong class="mr-5">{{element.titulo || ""}}</strong>
+                </div>
+                <div class="flex items-center mb-2">
+                  <span class="mr-2">Establecimiento:</span>
+                  <strong class="mr-5">{{element.establecimiento || ""}}</strong>
+                </div>
+                <div class="flex items-center mb-2">
+                  <span class="mr-2">Estado:</span>
+                  <strong class="mr-5">{{element.estado || ""}}</strong>
+                </div>
+              </div>
+              <div class="flex justify-end items-center mb-2">
+                <button class="ml-3 text-red-500 pt-2" (click)="removeEducation(element)" matTooltipPosition="right"
+                  matTooltip="Borrar">
+                  <mat-icon>
+                    <span class="material-icons-outlined"> delete </span>
+                  </mat-icon>
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="flex justify-center" [ngClass]="{'text-lg': !increaseFontSize, 'text-3xl': increaseFontSize}">
+        <button class="bg-sky-500 text-white p-3 rounded-lg" (click)="openDialog('education')">Agregar
+          educación</button>
+      </div>
+    </div>
+    <!--  -->
+    <div class="border-b w-full h-2"></div>
+    <!-- Idioma -->
+    <div class="w-full my-4" [ngClass]="{'text-2xl': !increaseFontSize, 'text-3xl': increaseFontSize}">
+      <div class="flex space-x-4 items-center mb-4">
+        <span class="text-slate-800">¿Qué idiomas sabes?</span>
+      </div>
+      <div class="flex-1 mt-4 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-16 items-center"
+        [ngClass]="{'text-lg': !increaseFontSize,'text-3xl': increaseFontSize}">
+        <mat-form-field appearance="outline" class="w-full md:w-80 pt-4"
+          [ngClass]="{'text-lg': !increaseFontSize,'text-3xl': increaseFontSize}">
+          <mat-label>Idiomas</mat-label>
+          <mat-select formControlName="language">
+            <mat-option value="Inglés">Inglés</mat-option>
+            <mat-option value="Francés">Francés</mat-option>
+            <mat-option value="Portugués">Portugués</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full md:w-80 pt-4"
+          [ngClass]="{'text-lg': !increaseFontSize,'text-3xl': increaseFontSize}">
+          <mat-label>Nivel</mat-label>
+          <mat-select formControlName="level">
+            <mat-option value="Básico">Básico</mat-option>
+            <mat-option value="Intermedio">Intermedio</mat-option>
+            <mat-option value="Avanzado">Avanzado</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="flex justify-center xl:justify-start w-full md:w-auto">
+          <button class="bg-sky-500 text-white p-3 rounded-lg w-48" (click)="addLanguage()"
+            [disabled]="!(form.get('language')?.value && form.get('level')?.value)">Agregar idioma</button>
+        </div>
+      </div>
+      <div class="flex space-x-4 items-center mt-4 justify-center mb-6">
+        <ul class="list-disc pl-8 border-solid border-2 p-5 rounded-lg" *ngIf="languageList.length > 0">
+          <li *ngFor="let element of languageList">
+            <div class="flex items-center">
+              <span>Idioma:<strong class="mx-2 mr-5">{{element.language || ""}}</strong>Nivel:<strong
+                  class="mx-2 mr-5">{{element.level || ""}}</strong></span>
+              <button class="ml-3 text-red-500 pt-2" (click)="removeLanguage(element)" matTooltipPosition="right"
+                matTooltip="Borrar">
+                <mat-icon>
+                  <span class="material-icons-outlined"> delete </span>
+                </mat-icon>
+              </button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!--  -->
+    <div class="border-b w-full h-2"></div>
+    <!-- Buscar  -->
+    <div class="w-full my-4" [ngClass]="{'text-2xl': !increaseFontSize, 'text-4xl': increaseFontSize}">
+      <div class="flex space-x-4 items-center mb-4 justify-center">
+        <button class="bg-sky-700 text-white p-3 rounded-lg mt-4" (click)="searchForOffers()">
+          Buscar ofertas
+        </button>
+      </div>
+    </div>
+    <!--  -->
+  </div>
+</form>
+<div class="overlay-container" *ngIf="flag">
+  <mat-spinner></mat-spinner>
+</div>

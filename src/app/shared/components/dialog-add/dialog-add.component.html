@@ -1,0 +1,49 @@
+<div [ngClass]="{'text-2xl': !increaseFontSize, 'text-3xl': increaseFontSize}">
+  <form [formGroup]="form">
+    <ng-container *ngIf="data.view === 'experience'">
+      <h1 class="bold text-center">¿De qué trabajaste?</h1>
+      <mat-form-field appearance="outline" class="w-full pt-8">
+        <mat-label>Ingrese su experiencia</mat-label>
+        <input matInput formControlName="experience" type="text"
+        placeholder="Repositor de supermercado">
+      </mat-form-field>
+    </ng-container>
+    <ng-container *ngIf="data.view === 'skill'">
+      <h1 class="bold text-center">¿En qué cosas eres bueno?</h1>
+      <mat-form-field appearance="outline" class="w-full pt-5">
+        <mat-label>Ingrese su habilidad</mat-label>
+        <input matInput formControlName="skill" type="text"
+        placeholder="Trabajo en equipo">
+        <mat-error *ngIf="form.get('skill')?.hasError('invalidFormat')">Solo se permiten letras</mat-error>
+      </mat-form-field>
+    </ng-container>
+    <ng-container *ngIf="data.view === 'education'">
+      <h1 class="bold text-center">¿Dónde has estudiado?</h1>
+      <mat-form-field appearance="outline" class="w-full pt-5">
+        <mat-label>Ingrese su título</mat-label>
+        <input matInput formControlName="title" type="text"
+        placeholder="Perito Mercantil">
+        <mat-error *ngIf="form.get('title')?.hasError('invalidFormat')">Solo se permiten letras</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-full pt-5">
+        <mat-label>Ingrese el establecimiento</mat-label>
+        <input matInput formControlName="institution" type="text"
+          placeholder="Escuela de Comercio N°3 José Manuel Estrada">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-full pt-5">
+        <mat-label>Seleccione el estado de finalización</mat-label>
+        <mat-select formControlName="state">
+          <mat-option value="Completo">Completo</mat-option>
+          <mat-option value="Incompleto">Incompleto</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
+    <div class="flex justify-around mt-4"
+    [ngClass]="{'text-2xl': !increaseFontSize, 'text-3xl': increaseFontSize}">
+      <button class="bg-green-600 text-white p-3 rounded-lg" (click)="add()"
+      [disabled]="!form.valid">Confirmar</button>
+      <button class="bg-red-600 text-white p-3 rounded-lg" (click)="close()">
+      Cancelar</button>
+    </div>
+  </form>
+</div>

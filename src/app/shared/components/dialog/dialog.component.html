@@ -1,0 +1,33 @@
+<div [ngClass]="{'text-lg': !data.increaseFontSize, 'text-xl': data.increaseFontSize}">
+  <h2 class="font-black text-2xl mb-2 text-center">{{data.title}}</h2>
+  <div class="overflow-y-auto" style="max-height: 700px;">
+    <p class="mb-1"><strong>Empresa:</strong> {{data.company}}</p>
+    <p class="mb-1"><strong>Fecha:</strong> {{data.date_publication}}</p>
+    <p class="mb-1"><strong>Lugar:</strong> {{data.location}}</p>
+    <p class="mb-1"><strong>Descripción:</strong> {{data.description}}</p>
+    <ng-container *ngIf="data.tasks[0] !== ''">
+      <ul class="mb-1 list-disc"><strong>Tareas:</strong>
+        <ng-container *ngFor="let item of data.tasks">
+          <li class="ml-8">{{ item.trim() }}</li>
+        </ng-container>
+      </ul>
+    </ng-container>
+    <ng-container *ngIf="data.requirements[0] !== ''">
+      <ul class="mb-1 list-disc"><strong>Requisitos:</strong>
+        <ng-container *ngFor="let item of data.requirements">
+          <li class="ml-8">{{ item.trim() }}</li>
+        </ng-container>
+      </ul>
+    </ng-container>
+    <p class="mb-1"><strong>Disponibilidad:</strong> {{data.availability}}</p>
+    <p class="mb-1"><strong>Modalidad:</strong> {{data.modality}}</p>
+    <div class="flex justify-around mt-4">
+      <button class="bg-green-600 text-white p-3 rounded-lg"
+        [autofocus]="false" tabindex="-1"
+        (click)="redirect(data.link)">Ver Oferta</button>
+      <button class="bg-red-600 text-white p-3 rounded-lg"
+        [autofocus]="false" tabindex="-2"
+        (click)="close()">Cerrar Oferta</button>
+    </div>
+  </div>
+</div>
