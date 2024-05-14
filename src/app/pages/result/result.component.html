@@ -3,7 +3,8 @@
     [ngClass]="{'text-2xl': !increaseFontSize, 'text-3xl': increaseFontSize}">
     <h2 class="font-black text-3xl">Resultados de la búsqueda de {{user?.firstname}} {{user?.lastname}}</h2>
     <div class="flex space-x-4">
-      <button class='btn-margin' color="primary" mat-mini-fab (click)="increaseLetterSize()" matTooltip="Visual">
+      <button class='btn-margin' color="primary" mat-mini-fab (click)="increaseLetterSize()"
+      matTooltip="Ajustar el tamaño de letra">
         <mat-icon>
           <span class="material-icons-outlined">visibility</span>
         </mat-icon>
