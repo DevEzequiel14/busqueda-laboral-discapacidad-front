@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DialogAddComponent } from 'src/app/shared/components/dialog-add/dialog-add.component';
+import * as annyang from 'annyang';
+
 
 @Component({
   selector: 'app-form',
@@ -20,7 +22,9 @@ export class FormComponent implements OnInit {
   languageList: any[] = []
   increaseFontSize = false;
   flag = false;
-  formBackup: any
+  formBackup: any;
+  flagRecognitionFirstName = false;
+  flagRecognitionLastName = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -150,5 +154,33 @@ export class FormComponent implements OnInit {
       }
     }
     event.stopPropagation();
+  }
+
+  startVoiceRecognition(field: string) {
+    if (annyang) {
+      // Define the commands for annyang
+      this.flagRecognitionFirstName = field === 'firstname' ? true : false
+      this.flagRecognitionLastName = field === 'lastname' ? true : false
+      annyang.removeCommands();
+      let commands = {
+        '*text': (text: string) => {
+          this.form.controls[field].patchValue(text)
+        }
+      };
+
+      // Add the commands to annyang
+      annyang.addCommands(commands);
+      annyang.setLanguage('es-ES');
+      // Start listening
+      annyang.start();
+      setTimeout(() => {
+        annyang.abort();
+        this.flagRecognitionFirstName = false
+        this.flagRecognitionLastName = false
+      }, 5000);
+
+    } else {
+      alert('Speech recognition not supported in this browser.');
+    }
   }
 }

@@ -4,8 +4,7 @@
       [ngClass]="{'text-lg': !increaseFontSize, 'text-3xl': increaseFontSize}">
       <h2 class="font-black text-3xl">Formulario</h2>
       <div class="flex space-x-4">
-        <button class="btn-margin" color="primary" mat-mini-fab (click)="increaseLetterSize()"
-        matTooltip="Ajustar el tamaño de letra">
+        <button color="primary" mat-mini-fab (click)="increaseLetterSize()" matTooltip="Ajustar el tamaño de letra">
           <mat-icon>
             <span class="material-icons-outlined"> visibility </span>
           </mat-icon>
@@ -19,23 +18,39 @@
       </div>
     </div>
     <div class="flex-1 flex-wrap space-y-4 md:flex md:space-y-0 md:space-x-16">
-      <div [ngClass]="{'text-lg': !increaseFontSize, 'text-3xl': increaseFontSize}">
+      <div [ngClass]="{'text-lg': !increaseFontSize, 'text-3xl': increaseFontSize}" class="flex items-center">
         <mat-form-field appearance="outline" class="w-full md:w-80">
           <mat-label>Ingrese su nombre</mat-label>
-          <input matInput formControlName="firstname" type="text" placeholder="Ezequiel"
-            (input)="onInputKeyPress($event, 'firstname')" />
+          <input matInput formControlName="firstname" type="text" placeholder="Ezequiel" />
           <mat-error *ngIf="form.get('firstname')?.hasError('required')">El nombre es obligatorio</mat-error>
           <mat-error *ngIf="form.get('firstname')?.hasError('invalidFormat')">Solo se permiten letras</mat-error>
         </mat-form-field>
+        <div [ngClass]="{'recognition': flagRecognitionFirstName}">
+          <button color="primary" mat-mini-fab (click)="startVoiceRecognition('firstname')"
+            [ngClass]="{'margin': !flagRecognitionFirstName}">
+            <mat-icon>
+              <span class="material-icons-outlined"> mic </span>
+            </mat-icon>
+          </button>
+          <span *ngIf="flagRecognitionFirstName"> Grabando...</span>
+        </div>
       </div>
-      <div [ngClass]="{'text-lg': !increaseFontSize, 'text-3xl': increaseFontSize}" class="mb-16">
+      <div [ngClass]="{'text-lg': !increaseFontSize, 'text-3xl': increaseFontSize}" class="mb-16 flex items-center">
         <mat-form-field appearance="outline" class="w-full md:w-80">
           <mat-label>Ingrese su apellido</mat-label>
-          <input matInput formControlName="lastname" type="text" placeholder="Chorolque"
-            (input)="onInputKeyPress($event, 'lastname')" />
+          <input matInput formControlName="lastname" type="text" placeholder="Chorolque" />
           <mat-error *ngIf="form.get('lastname')?.hasError('required')">El apellido es obligatorio</mat-error>
           <mat-error *ngIf="form.get('lastname')?.hasError('invalidFormat')">Solo se permiten letras</mat-error>
         </mat-form-field>
+        <div [ngClass]="{'recognition': flagRecognitionLastName}">
+          <button color="primary" mat-mini-fab (click)="startVoiceRecognition('lastname')"
+            [ngClass]="{'margin': !flagRecognitionLastName}">
+            <mat-icon>
+              <span class="material-icons-outlined"> mic </span>
+            </mat-icon>
+          </button>
+          <span *ngIf="flagRecognitionLastName"> Grabando...</span>
+        </div>
       </div>
     </div>
     <!--  -->

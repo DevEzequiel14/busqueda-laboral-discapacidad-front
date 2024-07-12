@@ -9,3 +9,17 @@
   justify-content: center;
   align-items: center;
 }
+
+.margin {
+  margin-left: 0.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.recognition {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 1.34375em;
+  padding-left: 0.5rem;
+}
