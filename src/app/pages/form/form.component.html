@@ -55,6 +55,28 @@
     </div>
     <!--  -->
     <div class="border-b w-full h-2"></div>
+    <!-- Tipo de discapacidad -->
+    <div class="w-full my-4" [ngClass]="{'text-2xl': !increaseFontSize, 'text-3xl': increaseFontSize}">
+      <div class="flex space-x-4 items-center mb-4">
+        <span class="text-slate-800">¿Qué tipo de discapacidad tienes?</span>
+      </div>
+      <div class="flex-1 mt-4 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-16 items-center"
+        [ngClass]="{'text-lg': !increaseFontSize,'text-3xl': increaseFontSize}">
+        <mat-form-field appearance="outline" class="w-full md:w-80 pt-4"
+          [ngClass]="{'text-lg': !increaseFontSize,'text-3xl': increaseFontSize}">
+          <mat-label>Tipo de discapacidad</mat-label>
+          <mat-select formControlName="typeOfDisability">
+            <mat-option>Seleccione</mat-option>
+            <mat-option value="Sensoriales">Sensoriales</mat-option>
+            <mat-option value="Motrices">Motrices</mat-option>
+            <mat-option value="Mentales">Mentales</mat-option>
+            <mat-option value="Múltiples">Múltiples</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <!--  -->
+    <div class="border-b w-full h-2"></div>
     <!-- Experciencia laboral -->
     <div class="w-full my-4" [ngClass]="{'text-2xl': !increaseFontSize, 'text-3xl': increaseFontSize}">
       <div class="flex space-x-4 items-center mb-4">
@@ -86,6 +108,14 @@
     <div class="w-full my-4" [ngClass]="{'text-2xl': !increaseFontSize,'text-3xl': increaseFontSize}">
       <div class="flex space-x-4 items-center mb-4">
         <span class="text-slate-800">¿En qué cosas eres bueno?</span>
+        <button (click)="playback()" color="primary" mat-mini-fab>
+          <mat-icon *ngIf="!flagPlayback">
+            <span class="material-icons-outlined">play_arrow</span>
+          </mat-icon>
+          <mat-icon *ngIf="flagPlayback">
+            <span class="material-icons-outlined">stop</span>
+          </mat-icon>
+        </button>
       </div>
       <mat-error class="text-sm" *ngIf="skillsList.length <= 0">* Debe tener al menos una habilidad</mat-error>
       <div class="flex space-x-4 items-center mt-4 justify-center mb-6">

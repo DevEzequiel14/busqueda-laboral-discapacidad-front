@@ -25,6 +25,8 @@ export class FormComponent implements OnInit {
   formBackup: any;
   flagRecognitionFirstName = false;
   flagRecognitionLastName = false;
+  audio: any;
+  flagPlayback = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,6 +44,7 @@ export class FormComponent implements OnInit {
       languages: [],
       language: '',
       level: '',
+      typeOfDisability: ''
     })
   }
 
@@ -50,6 +53,7 @@ export class FormComponent implements OnInit {
       this.formBackup = this.formService.getData()
       this.form.controls['firstname'].patchValue(this.formBackup.firstname)
       this.form.controls['lastname'].patchValue(this.formBackup.lastname)
+      this.form.controls['typeOfDisability'].patchValue(this.formBackup.typeOfDisability)
       this.formBackup.experiences.forEach((element: string) => {
         this.experienceList.push(element)
       });
@@ -155,10 +159,8 @@ export class FormComponent implements OnInit {
     }
     event.stopPropagation();
   }
-
   startVoiceRecognition(field: string) {
     if (annyang) {
-      // Define the commands for annyang
       this.flagRecognitionFirstName = field === 'firstname' ? true : false
       this.flagRecognitionLastName = field === 'lastname' ? true : false
       annyang.removeCommands();
@@ -167,11 +169,8 @@ export class FormComponent implements OnInit {
           this.form.controls[field].patchValue(text)
         }
       };
-
-      // Add the commands to annyang
       annyang.addCommands(commands);
       annyang.setLanguage('es-ES');
-      // Start listening
       annyang.start();
       setTimeout(() => {
         annyang.abort();
@@ -181,6 +180,25 @@ export class FormComponent implements OnInit {
 
     } else {
       alert('Speech recognition not supported in this browser.');
+    }
+  }
+
+  playback() {
+    if (!this.audio) {
+      this.audio = new Audio('./../../../assets/audio/explanation.wav');
+      this.audio.addEventListener('playing', () => {
+        this.flagPlayback = true;
+      });
+      this.audio.addEventListener('ended', () => {
+        this.flagPlayback = false;
+      });
+    }
+    if (this.flagPlayback) {
+      this.audio.ended();
+      this.flagPlayback = false;
+    } else {
+      this.audio.play();
+      this.flagPlayback = true;
     }
   }
 }
