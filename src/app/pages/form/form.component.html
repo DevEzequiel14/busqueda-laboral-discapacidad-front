@@ -72,6 +72,8 @@
             <mat-option value="Mentales">Mentales</mat-option>
             <mat-option value="Múltiples">Múltiples</mat-option>
           </mat-select>
+          <mat-error *ngIf="form.get('typeOfDisability')?.hasError('required')">El tipo de discapacidad es
+            obligatorio</mat-error>
         </mat-form-field>
       </div>
     </div>

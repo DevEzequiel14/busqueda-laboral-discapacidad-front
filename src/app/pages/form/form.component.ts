@@ -44,7 +44,7 @@ export class FormComponent implements OnInit {
       languages: [],
       language: '',
       level: '',
-      typeOfDisability: ''
+      typeOfDisability: ['', [Validators.required]],
     })
   }
 
@@ -194,7 +194,8 @@ export class FormComponent implements OnInit {
       });
     }
     if (this.flagPlayback) {
-      this.audio.ended();
+      this.audio.pause();
+      this.audio.currentTime = 0; // Reinicia el audio al principio
       this.flagPlayback = false;
     } else {
       this.audio.play();
