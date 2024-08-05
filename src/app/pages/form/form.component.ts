@@ -179,7 +179,7 @@ export class FormComponent implements OnInit {
       }, 5000);
 
     } else {
-      alert('Speech recognition not supported in this browser.');
+      alert('El reconocimiento de voz no es compatible con este navegador.');
     }
   }
 
@@ -195,7 +195,7 @@ export class FormComponent implements OnInit {
     }
     if (this.flagPlayback) {
       this.audio.pause();
-      this.audio.currentTime = 0; // Reinicia el audio al principio
+      this.audio.currentTime = 0;
       this.flagPlayback = false;
     } else {
       this.audio.play();

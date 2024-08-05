@@ -67,9 +67,9 @@
           <mat-label>Tipo de discapacidad</mat-label>
           <mat-select formControlName="typeOfDisability">
             <mat-option>Seleccione</mat-option>
-            <mat-option value="Sensoriales">Sensoriales</mat-option>
-            <mat-option value="Motrices">Motrices</mat-option>
-            <mat-option value="Mentales">Mentales</mat-option>
+            <mat-option value="Sensoriales">Sensorial</mat-option>
+            <mat-option value="Motrices">Motriz</mat-option>
+            <mat-option value="Mentales">Mental</mat-option>
             <mat-option value="Múltiples">Múltiples</mat-option>
           </mat-select>
           <mat-error *ngIf="form.get('typeOfDisability')?.hasError('required')">El tipo de discapacidad es
