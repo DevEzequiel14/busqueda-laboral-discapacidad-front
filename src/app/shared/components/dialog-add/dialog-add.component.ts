@@ -52,7 +52,7 @@ export class DialogAddComponent implements OnInit {
   }
   onlyLettersValidator() {
     return (control: any) => {
-      const valid = !(/[^a-zA-ZáéíóúÁÉÍÓÚüÜ\s]/g).test(control.value);
+      const valid = !(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜ\s]/g).test(control.value);
       return valid ? null : { invalidFormat: true };
     };
   }
